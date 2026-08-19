@@ -4,7 +4,7 @@ An interactive 3D globe tracing the journeys of history's famous explorers and
 travelers — Magellan, Zheng He, Ibn Battuta, James Cook, and more. Built as a
 static site so it can be hosted free on GitHub Pages.
 
-See [.plan/](.plan/) for the full design/architecture plan.
+![Traveler's Path website screenshot](media/website.png)
 
 ## Stack
 
@@ -34,5 +34,4 @@ Pages → Build and deployment → Source: GitHub Actions**.
 
 The Vite `base` path defaults to `/travelers_path/` (a project site under
 `https://<user>.github.io/travelers_path/`). Override via the `VITE_BASE` env
-var if the repo name or hosting layout differs (see
-[.plan/06-hosting-and-deploy.md](.plan/06-hosting-and-deploy.md)).
+var if the repo name or hosting layout differs.
