@@ -1,0 +1,20 @@
+/* Explorer / antique-cartography palette. See .plan/01-concept-and-aesthetic.md */
+:root {
+  --color-parchment: #f4e9d0;
+  --color-parchment-dark: #e8d8b0;
+  --color-ink-deep: #0e2a3b;
+  --color-ink-deep-2: #12384c;
+  --color-brass: #c8992e;
+  --color-brass-light: #e0b84a;
+  --color-route-primary: #9c3b28;
+  --color-route-secondary: #2f6f7a;
+  --color-sepia-text: #3a2c1a;
+
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-ui: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+
+  --panel-bg: rgba(244, 233, 208, 0.92);
+  --panel-border: var(--color-brass);
+  --panel-radius: 4px;
+  --panel-shadow: 0 6px 24px rgba(14, 42, 59, 0.45);
+}
