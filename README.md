@@ -6,6 +6,8 @@ static site so it can be hosted free on GitHub Pages.
 
 ![Traveler's Path website screenshot](media/website.png)
 
+![Traveler's Path mobile screenshot](media/mobile.png)
+
 ## Stack
 
 Vite + React + TypeScript, [globe.gl](https://github.com/vasturiano/globe.gl)

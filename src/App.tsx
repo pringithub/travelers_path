@@ -1,14 +1,57 @@
+import { useRef, useState } from "react";
 import { GlobeView } from "./globe/GlobeView";
 import { Cartouche } from "./ui/Cartouche";
 import { ExplorerList } from "./ui/ExplorerList";
 import { JourneyPanel } from "./ui/JourneyPanel";
 import { MapControls } from "./ui/MapControls";
+import { MobileTabBar } from "./ui/MobileTabBar";
 import { ErrorBoundary } from "./ui/ErrorBoundary";
+import { useAppStore } from "./state/store";
 import "./App.css";
 
+// Distance (px) a drag must travel down before releasing collapses the sheet.
+const DRAG_DISMISS_THRESHOLD = 90;
+
 function App() {
+  const mobileTab = useAppStore((s) => s.mobileTab);
+  const sheetOpen = useAppStore((s) => s.sheetOpen);
+  const setSheetOpen = useAppStore((s) => s.setSheetOpen);
+
+  const [dragY, setDragY] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const dragStartY = useRef(0);
+
+  const handleDragStart = (e: React.PointerEvent<HTMLButtonElement>) => {
+    setDragging(true);
+    dragStartY.current = e.clientY;
+    // Pointer capture can fail in some environments; the drag still works
+    // from move/up events bubbling to this element without it.
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleDragMove = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!dragging) return;
+    setDragY(Math.max(0, e.clientY - dragStartY.current));
+  };
+
+  const handleDragEnd = () => {
+    setDragging(false);
+    if (dragY > DRAG_DISMISS_THRESHOLD) {
+      setSheetOpen(false);
+    }
+    setDragY(0);
+  };
+
   return (
-    <div className="app">
+    <div
+      className="app"
+      data-mobile-tab={mobileTab}
+      data-sheet-open={sheetOpen}
+    >
       <ErrorBoundary
         fallback={
           <div className="globe-fallback" role="alert">
@@ -20,9 +63,30 @@ function App() {
         <GlobeView />
       </ErrorBoundary>
       <Cartouche />
-      <ExplorerList />
-      <JourneyPanel />
-      <MapControls />
+      <div
+        className="sheet"
+        style={
+          dragging
+            ? { transform: `translateY(${dragY}px)`, transition: "none" }
+            : undefined
+        }
+      >
+        <button
+          type="button"
+          className="sheet-handle"
+          aria-label="Drag down to collapse panel"
+          onPointerDown={handleDragStart}
+          onPointerMove={handleDragMove}
+          onPointerUp={handleDragEnd}
+          onPointerCancel={handleDragEnd}
+        >
+          <span className="sheet-handle-bar" />
+        </button>
+        <ExplorerList />
+        <JourneyPanel />
+        <MapControls />
+      </div>
+      <MobileTabBar />
     </div>
   );
 }

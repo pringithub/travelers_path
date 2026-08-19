@@ -128,6 +128,29 @@
   margin: 0.25rem 0 0;
 }
 
+/* Current explorer/expedition, set apart from the title by a hairline rule. */
+.cartouche .current-selection {
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(224, 184, 74, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.cartouche .selection-explorer {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.cartouche .selection-journey {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+}
+
 .explorer-list {
   position: absolute;
   top: 6rem;
@@ -429,27 +452,188 @@
   }
 }
 
+/* On desktop the sheet wrapper is transparent: its children float exactly as
+   before, and the mobile tab bar is hidden. */
+.sheet {
+  display: contents;
+}
+
+.sheet-handle {
+  display: none;
+}
+
+.mobile-tabbar {
+  display: none;
+}
+
 @media (max-width: 900px) {
-
-  .explorer-list,
-  .journey-panel {
-    width: calc(100vw - 3rem);
-    max-height: 30vh;
+  /* ---- Mobile: globe fills the screen, panels live in a bottom sheet ---- */
+  .cartouche {
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    border-radius: 0 0 18px 18px;
+    padding: 0.6rem 1rem 0.55rem;
   }
 
-  .journey-panel {
-    top: auto;
-    bottom: 6rem;
+  .cartouche h1 {
+    font-size: 1.5rem;
   }
 
-  .map-controls {
+  .cartouche .tagline {
+    font-size: 0.7rem;
+    margin-top: 0.15rem;
+  }
+
+  .cartouche .selection-explorer {
+    font-size: 0.88rem;
+  }
+
+  .cartouche .selection-journey {
+    font-size: 0.68rem;
+  }
+
+  /* The sheet becomes a real fixed container docked above the tab bar. Its
+     height hugs the active section's content (see per-tab rule below) so a
+     short section like Map Options never leaves blank space beneath it. */
+  .sheet {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 3.75rem;
+    z-index: 5;
+    height: 55vh;
+    max-height: 70vh;
+    padding: 0;
+    background: var(--panel-bg);
+    border-top: 1px solid var(--panel-border);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 28px rgba(14, 42, 59, 0.5);
+    overflow: hidden;
+    transform: translateY(0);
+    transition: transform 0.28s ease, opacity 0.2s ease, height 0.2s ease;
+  }
+
+  /* Map Options is short, so the sheet shrinks to fit it instead of leaving
+     empty parchment below the toggles. */
+  .app[data-mobile-tab="map"] .sheet {
+    height: auto;
+  }
+
+  /* Collapsed sheet slides fully out of view, leaving only globe + tab bar. */
+  .app[data-sheet-open="false"] .sheet {
+    transform: translateY(calc(100% + 3.75rem));
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Drag handle: lets the user pull a section down to reveal more of the globe. */
+  .sheet-handle {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.55rem 0 0.35rem;
+    background: transparent;
+    border: none;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .sheet-handle:active {
+    cursor: grabbing;
+  }
+
+  .sheet-handle-bar {
+    width: 2.5rem;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-brass);
+    opacity: 0.6;
+  }
+
+  /* Panels inside the sheet fill it and are shown one at a time by tab. */
+  .sheet .panel {
+    position: static;
+    inset: auto;
+    width: 100%;
+    max-height: none;
+    flex: 0 1 auto;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    backdrop-filter: none;
+    padding: 0.35rem 1.15rem 1.15rem;
     display: none;
   }
 
-  .cartouche {
-    left: 1rem;
-    right: 1rem;
-    transform: none;
-    border-radius: 18px;
+  .app[data-mobile-tab="explorers"] .sheet .explorer-list,
+  .app[data-mobile-tab="details"] .sheet .journey-panel,
+  .app[data-mobile-tab="map"] .sheet .map-controls {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Explorers/Details lists can be long, so they grow to fill the sheet;
+     Map Options stays sized to its own content (handled by the sheet
+     auto-height rule above). */
+  .app[data-mobile-tab="explorers"] .sheet .explorer-list,
+  .app[data-mobile-tab="details"] .sheet .journey-panel {
+    flex: 1 1 auto;
+  }
+
+  /* Bottom tab bar: the primary mobile navigation. */
+  .mobile-tabbar {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    height: 3.75rem;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    background: rgba(14, 42, 59, 0.96);
+    border-top: 1px solid rgba(224, 184, 74, 0.4);
+    backdrop-filter: blur(6px);
+  }
+
+  .mobile-tabbar button {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    background: transparent;
+    border: none;
+    color: var(--color-parchment);
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  .mobile-tabbar button.active {
+    opacity: 1;
+    color: var(--color-brass-light);
+  }
+
+  .mobile-tabbar .tab-icon {
+    font-size: 1.05rem;
+    line-height: 1;
+  }
+
+  /* Keep map controls hidden as a floating card; it now lives in the sheet. */
+  .map-controls {
+    bottom: auto;
+    left: auto;
+    width: 100%;
   }
 }

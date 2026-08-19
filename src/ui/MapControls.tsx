@@ -14,7 +14,7 @@ export function MapControls() {
 
   return (
     <div className="panel map-controls" aria-label="Map settings">
-      <h3>Map</h3>
+      <h3>Map Options</h3>
       <div
         className="map-style-buttons"
         role="radiogroup"
