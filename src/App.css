@@ -523,6 +523,19 @@
     height: auto;
   }
 
+  /* Dragging the handle up snaps Explorers/Details to a taller sheet so more
+     of the list (e.g. each voyage's waypoints) is visible at once. */
+  .app[data-sheet-expanded="true"] .sheet {
+    height: 85vh;
+    max-height: 90vh;
+  }
+
+  /* Map Options never grows past its own content, even if "expanded". */
+  .app[data-mobile-tab="map"] .sheet,
+  .app[data-mobile-tab="map"][data-sheet-expanded="true"] .sheet {
+    height: auto;
+  }
+
   /* Collapsed sheet slides fully out of view, leaving only globe + tab bar. */
   .app[data-sheet-open="false"] .sheet {
     transform: translateY(calc(100% + 3.75rem));

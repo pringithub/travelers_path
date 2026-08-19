@@ -12,11 +12,13 @@ interface AppState {
   showLabels: boolean;
   mobileTab: MobileTab;
   sheetOpen: boolean;
+  sheetExpanded: boolean;
   select: (explorerId: string, journeyId?: string) => void;
   setMapStyle: (mapStyle: MapStyle) => void;
   toggleLabels: () => void;
   setMobileTab: (tab: MobileTab) => void;
   setSheetOpen: (open: boolean) => void;
+  setSheetExpanded: (expanded: boolean) => void;
 }
 
 const first = explorers[0];
@@ -28,6 +30,7 @@ export const useAppStore = create<AppState>((set) => ({
   showLabels: true,
   mobileTab: 'explorers',
   sheetOpen: true,
+  sheetExpanded: false,
   select: (explorerId, journeyId) =>
     set(() => {
       const explorer = explorers.find((e) => e.id === explorerId);
@@ -45,5 +48,6 @@ export const useAppStore = create<AppState>((set) => ({
   setMapStyle: (mapStyle) => set({ mapStyle }),
   toggleLabels: () => set((s) => ({ showLabels: !s.showLabels })),
   setMobileTab: (tab) => set({ mobileTab: tab, sheetOpen: true }),
-  setSheetOpen: (open) => set({ sheetOpen: open }),
+  setSheetOpen: (open) => set((s) => ({ sheetOpen: open, sheetExpanded: open ? s.sheetExpanded : false })),
+  setSheetExpanded: (expanded) => set({ sheetExpanded: expanded }),
 }));
