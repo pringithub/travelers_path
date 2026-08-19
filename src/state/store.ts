@@ -1,14 +1,16 @@
 import { create } from 'zustand';
 import { explorers } from '../data/explorers';
 
+export type MapStyle = 'basic' | 'political' | 'satellite';
+
 interface AppState {
   selectedExplorerId: string;
   selectedJourneyId: string;
-  playing: boolean;
-  progress: number; // 0..1 along the selected journey
+  mapStyle: MapStyle;
+  showLabels: boolean;
   select: (explorerId: string, journeyId?: string) => void;
-  togglePlay: () => void;
-  setProgress: (progress: number) => void;
+  setMapStyle: (mapStyle: MapStyle) => void;
+  toggleLabels: () => void;
 }
 
 const first = explorers[0];
@@ -16,8 +18,8 @@ const first = explorers[0];
 export const useAppStore = create<AppState>((set) => ({
   selectedExplorerId: first.id,
   selectedJourneyId: first.journeys[0].id,
-  playing: false,
-  progress: 0,
+  mapStyle: 'basic',
+  showLabels: true,
   select: (explorerId, journeyId) =>
     set(() => {
       const explorer = explorers.find((e) => e.id === explorerId);
@@ -27,10 +29,8 @@ export const useAppStore = create<AppState>((set) => ({
       return {
         selectedExplorerId: explorerId,
         selectedJourneyId: journey?.id ?? explorer?.journeys[0]?.id ?? '',
-        playing: false,
-        progress: 0,
       };
     }),
-  togglePlay: () => set((s) => ({ playing: !s.playing })),
-  setProgress: (progress) => set({ progress }),
+  setMapStyle: (mapStyle) => set({ mapStyle }),
+  toggleLabels: () => set((s) => ({ showLabels: !s.showLabels })),
 }));

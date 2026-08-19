@@ -1,0 +1,73 @@
+import type { Explorer } from '../types';
+
+export const explorer: Explorer = {
+    id: 'mark-twain',
+    name: 'Mark Twain',
+    era: 'Industrial Age',
+    years: '1835 – 1910',
+    nationality: 'American',
+    blurb:
+      'Samuel Langhorne Clemens (Mark Twain) turned long-distance travel into literature, first with his 1867 Mediterranean and Holy Land cruise and later with a global lecture tour that became Following the Equator.',
+    tags: ['literature', 'modern'],
+    sources: [
+      { label: 'Mark Twain – Wikipedia', url: 'https://en.wikipedia.org/wiki/Mark_Twain' },
+      { label: 'The Innocents Abroad – Wikipedia', url: 'https://en.wikipedia.org/wiki/The_Innocents_Abroad' },
+      { label: 'Following the Equator – Wikipedia', url: 'https://en.wikipedia.org/wiki/Following_the_Equator' },
+    ],
+    journeys: [
+      {
+        id: 'innocents-abroad',
+        title: 'Quaker City excursion (The Innocents Abroad)',
+        yearStart: 1867,
+        yearEnd: 1867,
+        mode: 'ship',
+        color: '#2f6f7a',
+        summary:
+          'As a newspaper correspondent, Twain joined the Quaker City pleasure cruise through Europe and the Holy Land, gathering the material that became his breakout travel book The Innocents Abroad.',
+        waypoints: [
+          { id: 'wp1', name: 'New York City, United States', lat: 40.71, lng: -74.01, date: '1867-06-08', kind: 'port' },
+          { id: 'wp2', name: 'Ponta Delgada, Azores', lat: 37.74, lng: -25.67, date: '1867-06', kind: 'landfall' },
+          { id: 'wp3', name: 'Gibraltar', lat: 36.14, lng: -5.35, date: '1867-06', kind: 'landfall' },
+          { id: 'wp4', name: 'Marseille, France', lat: 43.3, lng: 5.37, date: '1867-06', kind: 'port' },
+          { id: 'wp5', name: 'Paris, France', lat: 48.86, lng: 2.35, date: '1867-07', kind: 'landfall' },
+          { id: 'wp6', name: 'Milan, Italy', lat: 45.46, lng: 9.19, date: '1867-07', kind: 'landfall' },
+          { id: 'wp7', name: 'Venice, Italy', lat: 45.44, lng: 12.32, date: '1867-08', kind: 'landfall' },
+          { id: 'wp8', name: 'Athens, Greece', lat: 37.98, lng: 23.73, date: '1867-08', kind: 'landfall' },
+          { id: 'wp9', name: 'Constantinople (Istanbul)', lat: 41.01, lng: 28.98, date: '1867-08', kind: 'landfall' },
+          { id: 'wp10', name: 'Odessa, Russian Empire', lat: 46.48, lng: 30.73, date: '1867-08', kind: 'landfall' },
+          { id: 'wp11', name: 'Jaffa, Ottoman Syria', lat: 32.05, lng: 34.75, date: '1867-09', kind: 'landfall' },
+          { id: 'wp12', name: 'Jerusalem', lat: 31.78, lng: 35.22, date: '1867-09', kind: 'landfall' },
+          { id: 'wp13', name: 'Cairo, Egypt', lat: 30.04, lng: 31.24, date: '1867-10', kind: 'landfall' },
+          { id: 'wp14', name: 'Bermuda', lat: 32.31, lng: -64.75, date: '1867-11', kind: 'landfall' },
+          { id: 'wp15', name: 'New York City, United States', lat: 40.71, lng: -74.01, date: '1867-11-19', kind: 'port', note: 'Journey ends; dispatches later expanded into The Innocents Abroad' },
+        ],
+      },
+      {
+        id: 'around-the-world-lecture-tour',
+        title: 'Round-the-world lecture tour (Following the Equator)',
+        yearStart: 1895,
+        yearEnd: 1896,
+        mode: 'ship',
+        color: '#9c6b2f',
+        summary:
+          'To pay off debts after bankruptcy, Twain undertook a global lecture circuit across the Pacific, South Asia, southern Africa, and back to Europe, documented in Following the Equator.',
+        waypoints: [
+          { id: 'wp1', name: 'New York City, United States', lat: 40.71, lng: -74.01, date: '1895-07', kind: 'port' },
+          { id: 'wp2', name: 'Vancouver, Canada', lat: 49.28, lng: -123.12, date: '1895-07', kind: 'port' },
+          { id: 'wp3', name: 'Honolulu, Hawaii', lat: 21.31, lng: -157.86, date: '1895-08', kind: 'landfall' },
+          { id: 'wp4', name: 'Suva, Fiji', lat: -18.12, lng: 178.45, date: '1895-09', kind: 'landfall' },
+          { id: 'wp5', name: 'Sydney, Australia', lat: -33.87, lng: 151.21, date: '1895-09', kind: 'port' },
+          { id: 'wp6', name: 'Melbourne, Australia', lat: -37.81, lng: 144.96, date: '1895-10', kind: 'landfall' },
+          { id: 'wp7', name: 'Hobart, Tasmania', lat: -42.88, lng: 147.33, date: '1895-11', kind: 'landfall' },
+          { id: 'wp8', name: 'Auckland, New Zealand', lat: -36.85, lng: 174.76, date: '1896-01', kind: 'landfall' },
+          { id: 'wp9', name: 'Colombo, Ceylon', lat: 6.93, lng: 79.85, date: '1896-04', kind: 'landfall' },
+          { id: 'wp10', name: 'Bombay (Mumbai), India', lat: 19.08, lng: 72.88, date: '1896-05', kind: 'landfall' },
+          { id: 'wp11', name: 'Calcutta (Kolkata), India', lat: 22.57, lng: 88.36, date: '1896-06', kind: 'landfall' },
+          { id: 'wp12', name: 'Durban, South Africa', lat: -29.86, lng: 31.02, date: '1896-07', kind: 'port' },
+          { id: 'wp13', name: 'Johannesburg, South African Republic', lat: -26.2, lng: 28.04, date: '1896-08', kind: 'landfall' },
+          { id: 'wp14', name: 'Cape Town, Cape Colony', lat: -33.92, lng: 18.42, date: '1896-09', kind: 'landfall' },
+          { id: 'wp15', name: 'Southampton, England', lat: 50.91, lng: -1.4, date: '1896-10', kind: 'port', note: 'Journey ends; lectures and notebooks became Following the Equator' },
+        ],
+      },
+    ],
+  };

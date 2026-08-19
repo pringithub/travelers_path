@@ -2,8 +2,7 @@ import { GlobeView } from './globe/GlobeView';
 import { Cartouche } from './ui/Cartouche';
 import { ExplorerList } from './ui/ExplorerList';
 import { JourneyPanel } from './ui/JourneyPanel';
-import { Legend } from './ui/Legend';
-import { PlaybackControls } from './ui/PlaybackControls';
+import { MapControls } from './ui/MapControls';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 import './App.css';
 
@@ -23,8 +22,7 @@ function App() {
       <Cartouche />
       <ExplorerList />
       <JourneyPanel />
-      <Legend />
-      <PlaybackControls />
+      <MapControls />
     </div>
   );
 }
