@@ -430,18 +430,22 @@
 }
 
 @media (max-width: 900px) {
+
   .explorer-list,
   .journey-panel {
     width: calc(100vw - 3rem);
     max-height: 30vh;
   }
+
   .journey-panel {
     top: auto;
     bottom: 6rem;
   }
+
   .map-controls {
     display: none;
   }
+
   .cartouche {
     left: 1rem;
     right: 1rem;

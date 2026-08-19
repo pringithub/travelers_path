@@ -1,14 +1,14 @@
-import { useEffect, useRef } from 'react';
-import Globe, { type GlobeInstance } from 'globe.gl';
-import * as THREE from 'three';
-import { feature } from 'topojson-client';
-import type { Topology, GeometryCollection } from 'topojson-specification';
-import landTopology from 'world-atlas/land-110m.json';
-import countryTopology from 'world-atlas/countries-110m.json';
-import { useAppStore } from '../state/store';
-import { findExplorer } from '../data/explorers';
-import { GLOBE_COLORS } from './theme';
-import { journeyCentroid } from './geo';
+import { useEffect, useRef } from "react";
+import Globe, { type GlobeInstance } from "globe.gl";
+import * as THREE from "three";
+import { feature } from "topojson-client";
+import type { Topology, GeometryCollection } from "topojson-specification";
+import landTopology from "world-atlas/land-110m.json";
+import countryTopology from "world-atlas/countries-110m.json";
+import { useAppStore } from "../state/store";
+import { findExplorer } from "../data/explorers";
+import { GLOBE_COLORS } from "./theme";
+import { journeyCentroid } from "./geo";
 
 const landFeatures = (
   feature(
@@ -20,15 +20,15 @@ const landFeatures = (
 const countryFeatures = (
   feature(
     countryTopology as unknown as Topology,
-    (countryTopology as unknown as Topology).objects.countries as GeometryCollection,
+    (countryTopology as unknown as Topology).objects
+      .countries as GeometryCollection,
   ) as unknown as { features: GeoJSON.Feature[] }
 ).features;
 
 const SATELLITE_TEXTURE_URL = `${import.meta.env.BASE_URL}textures/earth-blue-marble.jpg`;
 
-
 interface WaypointTag {
-  kind: 'waypoint';
+  kind: "waypoint";
   lat: number;
   lng: number;
   name: string;
@@ -39,15 +39,15 @@ interface WaypointTag {
 type HtmlTag = WaypointTag;
 
 function renderTag(d: HtmlTag): HTMLElement {
-  const div = document.createElement('div');
-  div.className = 'wp-pin';
-  const stem = document.createElement('span');
-  stem.className = 'wp-pin-stem';
-  const dot = document.createElement('span');
-  dot.className = 'wp-pin-dot';
+  const div = document.createElement("div");
+  div.className = "wp-pin";
+  const stem = document.createElement("span");
+  stem.className = "wp-pin-stem";
+  const dot = document.createElement("span");
+  dot.className = "wp-pin-dot";
   dot.style.background = d.color;
-  const tag = document.createElement('span');
-  tag.className = 'wp-tag';
+  const tag = document.createElement("span");
+  tag.className = "wp-tag";
   tag.textContent = d.date ? `${d.name} \u2014 ${d.date}` : d.name;
   div.append(stem, dot, tag);
   return div;
@@ -68,7 +68,7 @@ export function GlobeView() {
     if (!el) return;
 
     const globe = new Globe(el)
-      .backgroundColor('rgba(0,0,0,0)')
+      .backgroundColor("rgba(0,0,0,0)")
       .showAtmosphere(true)
       .atmosphereColor(GLOBE_COLORS.atmosphere)
       .atmosphereAltitude(0.18)
@@ -95,7 +95,7 @@ export function GlobeView() {
     return () => {
       observer.disconnect();
       globeRef.current = null;
-      el.innerHTML = '';
+      el.innerHTML = "";
     };
   }, []);
 
@@ -105,20 +105,26 @@ export function GlobeView() {
     const globe = globeRef.current;
     if (!globe) return;
 
-    if (mapStyle === 'satellite') {
+    if (mapStyle === "satellite") {
       // The imagery already depicts land/ocean, so the flat polygon layer is hidden.
       globe.globeImageUrl(SATELLITE_TEXTURE_URL).polygonsData([]);
     } else {
-      const features = mapStyle === 'political' ? countryFeatures : landFeatures;
-      const strokeColor = mapStyle === 'political' ? GLOBE_COLORS.politicalStroke : GLOBE_COLORS.landStroke;
+      const features =
+        mapStyle === "political" ? countryFeatures : landFeatures;
+      const strokeColor =
+        mapStyle === "political"
+          ? GLOBE_COLORS.politicalStroke
+          : GLOBE_COLORS.landStroke;
       // globeImageUrl('') alone doesn't clear a previously-loaded texture map,
       // so assign a fresh material to fully reset the surface from satellite mode.
       globe
-        .globeImageUrl('')
-        .globeMaterial(new THREE.MeshPhongMaterial({ color: GLOBE_COLORS.ocean }))
+        .globeImageUrl("")
+        .globeMaterial(
+          new THREE.MeshPhongMaterial({ color: GLOBE_COLORS.ocean }),
+        )
         .polygonsData(features)
         .polygonCapColor(() => GLOBE_COLORS.land)
-        .polygonSideColor(() => 'rgba(58, 44, 26, 0.15)')
+        .polygonSideColor(() => "rgba(58, 44, 26, 0.15)")
         .polygonStrokeColor(() => strokeColor)
         .polygonAltitude(0.006);
     }
@@ -126,7 +132,7 @@ export function GlobeView() {
 
   // Toggle visibility of waypoint name/date labels without disturbing the markers.
   useEffect(() => {
-    containerRef.current?.classList.toggle('hide-labels', !showLabels);
+    containerRef.current?.classList.toggle("hide-labels", !showLabels);
   }, [showLabels]);
 
   // Update route + waypoint layers and camera on selection change.
@@ -153,7 +159,7 @@ export function GlobeView() {
       .pathTransitionDuration(600);
 
     waypointTagsRef.current = journey.waypoints.map((wp) => ({
-      kind: 'waypoint',
+      kind: "waypoint",
       lat: wp.lat,
       lng: wp.lng,
       name: wp.name,
@@ -163,7 +169,10 @@ export function GlobeView() {
     globe.htmlElementsData([...waypointTagsRef.current]);
 
     const centroid = journeyCentroid(journey.waypoints);
-    globe.pointOfView({ lat: centroid.lat, lng: centroid.lng, altitude: 1.8 }, 1200);
+    globe.pointOfView(
+      { lat: centroid.lat, lng: centroid.lng, altitude: 1.8 },
+      1200,
+    );
   }, [selectedExplorerId, selectedJourneyId]);
 
   return <div ref={containerRef} className="globe-view" />;

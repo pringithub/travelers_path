@@ -5,10 +5,16 @@ export interface Waypoint {
   lng: number;
   date?: string;
   note?: string;
-  kind?: 'port' | 'landfall' | 'death' | 'discovery' | 'turnaround';
+  kind?: "port" | "landfall" | "death" | "discovery" | "turnaround";
 }
 
-export type JourneyMode = 'ship' | 'caravan' | 'foot' | 'sled' | 'balloon' | 'horse';
+export type JourneyMode =
+  | "ship"
+  | "caravan"
+  | "foot"
+  | "sled"
+  | "balloon"
+  | "horse";
 
 export interface Journey {
   id: string;

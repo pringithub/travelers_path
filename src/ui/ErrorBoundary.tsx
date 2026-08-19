@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from 'react';
+import { Component, type ReactNode } from "react";
 
 interface Props {
   fallback: ReactNode;
@@ -18,7 +18,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: unknown) {
-    console.error('GlobeView failed to render:', error);
+    console.error("GlobeView failed to render:", error);
   }
 
   render() {
