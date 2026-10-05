@@ -13,6 +13,15 @@
     --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
     --font-ui: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
 
+    /* Type scale: use these rather than one-off sizes. */
+    --text-xs: 0.75rem;     /* 12px captions, dates, meta */
+    --text-sm: 0.8125rem;   /* 13px controls */
+    --text-md: 0.875rem;    /* 14px list items */
+    --text-body: 0.9375rem; /* 15px prose */
+    --text-lg: 1.125rem;    /* 18px panel headings */
+    --text-xl: 1.375rem;    /* 22px primary heading */
+
+    --scrollbar-thumb: rgba(200, 153, 46, 0.55);
     --panel-bg: rgba(244, 233, 208, 0.92);
     --panel-border: var(--color-brass);
     --panel-radius: 4px;

@@ -26,7 +26,7 @@ const first = explorers[0];
 export const useAppStore = create<AppState>((set) => ({
   selectedExplorerId: first.id,
   selectedJourneyId: first.journeys[0].id,
-  mapStyle: 'basic',
+  mapStyle: 'satellite',
   showLabels: true,
   mobileTab: 'explorers',
   sheetOpen: true,
