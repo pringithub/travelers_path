@@ -28,3 +28,6 @@ dist-ssr
 
 # Browser-automation screenshots/logs
 .playwright-mcp/
+
+# Personal notes
+inspiration.md
