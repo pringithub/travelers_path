@@ -4,9 +4,15 @@ An interactive 3D globe tracing the journeys of history's famous explorers and
 travelers — Magellan, Zheng He, Ibn Battuta, James Cook, and more. Built as a
 static site so it can be hosted free on GitHub Pages.
 
+**Live site: [pringithub.github.io/travelers_path](https://pringithub.github.io/travelers_path/)**
+
 ![Traveler's Path website screenshot](media/website.png)
 
-![Traveler's Path mobile screenshot](media/mobile.png)
+<p>
+  <img src="media/mobile.png" alt="Traveler's Path mobile screenshot" width="280">
+  &nbsp;
+  <img src="media/mobile1.png" alt="Traveler's Path mobile screenshot" width="280">
+</p>
 
 ## Stack
 
