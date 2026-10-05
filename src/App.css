@@ -596,7 +596,9 @@
     bottom: 3.75rem;
     z-index: 5;
     height: 55vh;
+    height: 55dvh;
     max-height: 70vh;
+    max-height: 70dvh;
     padding: 0;
     background: var(--panel-bg);
     border-top: 1px solid var(--panel-border);
@@ -617,7 +619,9 @@
      of the list (e.g. each voyage's waypoints) is visible at once. */
   .app[data-sheet-expanded="true"] .sheet {
     height: 85vh;
-    max-height: 90vh;
+    /* iOS Safari's vh ignores its toolbars, which pushed the handle off the top. */
+    height: min(85dvh, calc(100dvh - 3.75rem - 24px));
+    max-height: none;
   }
 
   /* Map Options never grows past its own content, even if "expanded". */

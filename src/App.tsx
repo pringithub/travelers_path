@@ -15,6 +15,8 @@ const DRAG_DISMISS_THRESHOLD = 90;
 const SHEET_DEFAULT_VH = 0.55;
 const SHEET_EXPANDED_VH = 0.85;
 const SHEET_EXPAND_MIDPOINT_VH = (SHEET_DEFAULT_VH + SHEET_EXPANDED_VH) / 2;
+// Minimum gap (px) kept above the sheet so its drag handle never leaves the screen.
+const SHEET_TOP_GAP = 24;
 
 function App() {
   const mobileTab = useAppStore((s) => s.mobileTab);
@@ -29,6 +31,7 @@ function App() {
   const [dragging, setDragging] = useState(false);
   const dragStartY = useRef(0);
   const dragStartHeight = useRef(0);
+  const dragStartBottom = useRef(0);
 
   // The Map Options section hugs its own (short) content, so its handle only
   // supports the drag-down-to-dismiss gesture. Explorers/Details can also be
@@ -38,7 +41,9 @@ function App() {
   const handleDragStart = (e: React.PointerEvent<HTMLButtonElement>) => {
     setDragging(true);
     dragStartY.current = e.clientY;
-    dragStartHeight.current = sheetRef.current?.getBoundingClientRect().height ?? 0;
+    const rect = sheetRef.current?.getBoundingClientRect();
+    dragStartHeight.current = rect?.height ?? 0;
+    dragStartBottom.current = rect?.bottom ?? window.innerHeight;
     // Pointer capture can fail in some environments; the drag still works
     // from move/up events bubbling to this element without it.
     try {
@@ -55,7 +60,10 @@ function App() {
       return;
     }
     const delta = e.clientY - dragStartY.current;
-    const maxHeight = window.innerHeight * SHEET_EXPANDED_VH;
+    const maxHeight = Math.min(
+      window.innerHeight * SHEET_EXPANDED_VH,
+      dragStartBottom.current - SHEET_TOP_GAP,
+    );
     setDragHeight(Math.min(maxHeight, Math.max(0, dragStartHeight.current - delta)));
   };
 
@@ -104,7 +112,7 @@ function App() {
         style={
           dragging
             ? canResize
-              ? { height: `${dragHeight}px`, transition: 'none' }
+              ? { height: `${dragHeight}px`, maxHeight: 'none', transition: 'none' }
               : { transform: `translateY(${dragY}px)`, transition: 'none' }
             : undefined
         }
